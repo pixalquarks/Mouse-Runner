@@ -1,5 +1,6 @@
 import S from 'Scene';
 import R from 'Reactive';
+import D from 'Diagnostics';
 import Time from 'Time';
 
 import FaceTracking from 'FaceTracking';
@@ -39,6 +40,7 @@ async function main() {
         score.StartScoreIncrement();
         hasStarted = R.val(true);
         startTip.hidden = R.val(true);
+        audioPlayback.BackgroundPlay(true);
     });
 
 }
@@ -50,6 +52,7 @@ export function onObstacleHit() {
     score.StopScoreIncrement();
     charMaterialManager.onCharacterHitObstacle();
     audioPlayback.PlayTrapHit();
+    audioPlayback.BackgroundPlay(false);
 }
 
 export function onCheeseHit(hitObj : SceneObjectBase) {
@@ -60,6 +63,8 @@ export function onCheeseHit(hitObj : SceneObjectBase) {
     }, onCheeseHitDelay);
     hitObj.hidden = R.val(true);
     hitObj.transform.x = R.val(1);
+    const name = cheeseAnimation.getProductName(hitObj);
+    charMaterialManager.onCheeseHit(name);
     score.OnCheeseHit();
     audioPlayback.PlayCheeseBite();
 }

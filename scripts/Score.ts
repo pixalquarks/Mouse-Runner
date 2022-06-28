@@ -1,11 +1,9 @@
 import NativeUI from 'NativeUI';
 import Time from 'Time';
+import D from 'Diagnostics';
 
 const scoreText = 'Score';
-
-async function main() {
-    NativeUI.setText(scoreText, 'Hello, World!');
-}
+const gameOverText = 'GameOver';
 
 class Score {
     _score: number;
@@ -35,6 +33,7 @@ class Score {
 
     StopScoreIncrement() {
         Time.clearInterval(this.incrementScoreInterval);
+        NativeUI.setText(gameOverText, "Game Over");
     }
 
     OnCheeseHit() {
@@ -44,3 +43,8 @@ class Score {
 }
 
 export const score = new Score();
+
+
+// https://www.instagram.com/ar/417782320007985/
+
+// https://www.instagram.com/ar/582787773220352/
